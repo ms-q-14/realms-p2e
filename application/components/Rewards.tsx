@@ -19,12 +19,6 @@ type Props = {
   tokenContract: Token;
 };
 
-/**
- * This component shows the:
- * - Metadata of the token itself (mainly care about image)
- * - The amount this wallet holds of this wallet
- * - The amount this user can claim from the fighting contract
- */
 export default function Rewards({ fightingContract, tokenContract }: Props) {
   const address = useAddress();
 
