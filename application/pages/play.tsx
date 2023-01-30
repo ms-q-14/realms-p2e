@@ -4,6 +4,7 @@ import {
   useContract,
   useMetamask,
 } from "@thirdweb-dev/react";
+import Head from "next/head";
 import React from "react";
 import CurrentGear from "../components/CurrentGear";
 import LoadingSection from "../components/LoadingSection";
@@ -42,75 +43,85 @@ export default function Play() {
 
   return (
     <div className={styles.container}>
-      {fightingContract &&
-      characterContract &&
-      tokenContract &&
-      weaponContract ? (
-        <div className={styles.mainSection}>
-          <CurrentGear
-            fightingContract={fightingContract}
-            characterContract={characterContract}
-            weaponContract={weaponContract}
-          />
-          <Rewards
-            fightingContract={fightingContract}
-            tokenContract={tokenContract}
-          />
+      <Head>
+        <title>Realms - P2E</title>
+        <link rel="icon" href="./corrupted_soul.png" />
+      </Head>
+      {
+        <div className={styles.container}>
+          {fightingContract &&
+          characterContract &&
+          tokenContract &&
+          weaponContract ? (
+            <div className={styles.mainSection}>
+              <CurrentGear
+                fightingContract={fightingContract}
+                characterContract={characterContract}
+                weaponContract={weaponContract}
+              />
+              <Rewards
+                fightingContract={fightingContract}
+                tokenContract={tokenContract}
+              />
+            </div>
+          ) : (
+            <LoadingSection />
+          )}
+
+          <hr className={`${styles.divider} ${styles.bigSpacerTop}`} />
+
+          {weaponContract && fightingContract ? (
+            <>
+              <h2 className={`${styles.noGapTop} ${styles.noGapBottom}`}>
+                Your Owned Weapons
+              </h2>
+              <div
+                style={{
+                  width: "100%",
+                  minHeight: "10rem",
+                  display: "flex",
+                  flexDirection: "row",
+                  justifyContent: "center",
+                  alignItems: "center",
+                  marginTop: 8,
+                }}
+              >
+                <OwnedGear
+                  weaponContract={weaponContract}
+                  fightingContract={fightingContract}
+                />
+              </div>
+            </>
+          ) : (
+            <LoadingSection />
+          )}
+
+          <hr className={`${styles.divider} ${styles.bigSpacerTop}`} />
+
+          {weaponContract && tokenContract ? (
+            <>
+              <h2 className={`${styles.noGapTop} ${styles.noGapBottom}`}>
+                Shop
+              </h2>
+              <div
+                style={{
+                  width: "100%",
+                  minHeight: "10rem",
+                  display: "flex",
+                  flexDirection: "row",
+                  justifyContent: "center",
+                  alignItems: "center",
+                  marginTop: 8,
+                }}
+              >
+                <Shop weaponContract={weaponContract} />
+              </div>
+            </>
+          ) : (
+            <LoadingSection />
+          )}
         </div>
-      ) : (
-        <LoadingSection />
-      )}
-
-      <hr className={`${styles.divider} ${styles.bigSpacerTop}`} />
-
-      {weaponContract && fightingContract ? (
-        <>
-          <h2 className={`${styles.noGapTop} ${styles.noGapBottom}`}>
-            Your Owned Weapons
-          </h2>
-          <div
-            style={{
-              width: "100%",
-              minHeight: "10rem",
-              display: "flex",
-              flexDirection: "row",
-              justifyContent: "center",
-              alignItems: "center",
-              marginTop: 8,
-            }}
-          >
-            <OwnedGear
-              weaponContract={weaponContract}
-              fightingContract={fightingContract}
-            />
-          </div>
-        </>
-      ) : (
-        <LoadingSection />
-      )}
-
-      <hr className={`${styles.divider} ${styles.bigSpacerTop}`} />
-
-      {weaponContract && tokenContract ? (
-        <>
-          <h2 className={`${styles.noGapTop} ${styles.noGapBottom}`}>Shop</h2>
-          <div
-            style={{
-              width: "100%",
-              minHeight: "10rem",
-              display: "flex",
-              flexDirection: "row",
-              justifyContent: "center",
-              alignItems: "center",
-              marginTop: 8,
-            }}
-          >
-            <Shop weaponContract={weaponContract} />
-          </div>
-        </>
-      ) : (
-        <LoadingSection />
-      )}
+      }
     </div>
   );
 }
